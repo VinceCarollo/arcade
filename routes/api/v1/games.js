@@ -70,4 +70,21 @@ router.patch("/:id", function(req, res, next) {
   })
 })
 
+router.delete("/:id", function(req, res, next) {
+  Game.destroy({
+    where: {
+      id: req.params.id
+    }
+  })
+  .then(rowDeleted => {
+    if (rowDeleted === 1) {
+      res.setHeader("Content-Type", "application/json");
+      res.status(201).send(JSON.stringify('Successfully Deleted'));
+    } else {
+      res.setHeader("Content-Type", "application/json");
+      res.status(500).send(JSON.stringify('Resource Unsuccessfully Deleted'));
+    }
+  })
+})
+
 module.exports = router;
